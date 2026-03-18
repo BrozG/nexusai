@@ -16,7 +16,7 @@ const adapters = [
   { name: 'bank-lora-v1', domain: 'banking' },
 ]
 
-export default function JsonPanel({ lastResponse, domain, latency, adapterName }: JsonPanelProps) {
+export default function JsonPanel({ lastResponse = '', domain, latency, adapterName }: JsonPanelProps) {
   const [copied, setCopied] = useState(false)
 
   const jsonObj = {

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -9,7 +10,7 @@
   --surface: #111118;
   --surface2: #18181f;
   --border: oklch(0.922 0 0);
-  --border2: rgba(255,255,255,0.12);
+  --border2: rgba(255, 255, 255, 0.12);
   --accent: oklch(0.97 0 0);
   --accent2: #a78bfa;
   --green: #34d399;
@@ -51,7 +52,7 @@
 body {
   background: #0a0a0f;
   color: #f0eeff;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -61,18 +62,27 @@ body {
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 4px;
 }
 
 /* Typing indicator dots */
 @keyframes typingBounce {
-  0%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-6px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-6px);
+  }
 }
 
 .typing-dot {
@@ -82,9 +92,11 @@ body {
   background: #a78bfa;
   animation: typingBounce 1.2s infinite;
 }
+
 .typing-dot:nth-child(2) {
   animation-delay: 0.2s;
 }
+
 .typing-dot:nth-child(3) {
   animation-delay: 0.4s;
 }
@@ -95,20 +107,30 @@ body {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 .message-enter {
   animation: messageIn 0.3s ease forwards;
 }
 
 /* Pulse for status dot */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
 }
+
 .animate-pulse-dot {
   animation: pulse 2s ease-in-out infinite;
 }
@@ -193,10 +215,224 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
+
+}
+
+/* ── Horizon Hero ── */
+.hero-container {
+  position: relative;
+  width: 100%;
+  background: #000;
+}
+
+.hero-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.side-menu {
+  position: fixed;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menu-icon span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
+}
+
+.hero-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  text-align: center;
+  width: 100%;
+  padding: 0 40px;
+  pointer-events: none;
+}
+
+.hero-title {
+  font-family: 'Barlow Condensed', sans-serif; 
+  font-weight: 800;
+  font-size: clamp(5rem, 9vw, 8rem); 
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  color: #ff3b3b;
+  text-transform: uppercase;
+  margin: 0 0 24px 0;
+  overflow: visible;  /* ← change hidden to visible */
+  visibility: hidden;
+  transition: text-shadow 0.3s ease;
+}
+
+.title-char {
+  display: inline-block;
+}
+
+.hero-subtitle {
+  visibility: hidden;
+}
+
+.subtitle-line {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 2;
+  margin: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.scroll-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+}
+
+.progress-track {
+  width: 80px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c6aff, #22d3ee);
+  transition: width 0.1s ease;
+}
+
+.section-counter {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.scroll-sections {
+  position: relative;
+  z-index: 1;
+}
+
+.content-section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 40px;
+}
+
+.content-section .hero-title {
+  visibility: visible;
+}
+
+.content-section .hero-subtitle {
+  visibility: visible;
+}
+
+.hero-title {
+  color: #ff3b3b !important;
+}
+
+.subtitle-line {
+  color: #ff6666 !important;
+}
+
+.hero-content {
+  visibility: visible !important;
+}
+
+.hero-content .hero-title {
+  visibility: visible !important;
+}
+
+.hero-content .hero-subtitle {
+  visibility: visible !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-icon {
+  pointer-events: auto !important;
+}
+
+.side-menu {
+  pointer-events: auto !important;
+}
+/* Pill hover — scale up */
+.pill-tag {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.pill-tag:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 12px rgba(255, 59, 59, 0.4);
+}
+
+/* Hero title hover — neon red glow */
+.hero-title:hover {
+  text-shadow: 0 0 15px rgba(255, 59, 59, 0.4); /* ← single subtle layer */
 }
