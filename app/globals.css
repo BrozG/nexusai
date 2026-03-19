@@ -56,6 +56,67 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Z-Index Scale */
+:root {
+  --z-drawer: 50;
+  --z-overlay: 40;
+  --z-topbar: 30;
+  --z-fab: 25;
+}
+
+/* Responsive Font Sizes */
+html {
+  font-size: 14px; /* Default for mobile */
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.text-fluid-h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+}
+
+.text-fluid-h2 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+.text-fluid-body {
+  font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+/* Visibility Utilities */
+.only-mobile {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+.only-desktop {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .only-mobile {
+    display: none !important;
+  }
+  .only-desktop {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Layout Utilities */
+.full-height {
+  height: 100vh;
+  height: 100dvh;
 }
 
 /* Scrollbar styling */

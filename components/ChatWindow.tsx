@@ -97,24 +97,28 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
   }
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
       {/* Chat Header */}
       <div
         style={{
-          padding: '14px 20px',
+          padding: '0.875rem 1rem',
           borderBottom: '1px solid rgba(255,255,255,0.07)',
           display: 'flex',
           alignItems: 'center',
-          gap: '12px',
+          gap: '0.75rem',
+          flexWrap: 'wrap',
+          background: 'rgba(10,10,15,0.8)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 10,
         }}
       >
         <span
           style={{
-            fontSize: '11px',
+            fontSize: '0.6875rem',
             fontWeight: 700,
             letterSpacing: '0.5px',
-            padding: '3px 10px',
-            borderRadius: '20px',
+            padding: '0.25rem 0.625rem',
+            borderRadius: '1.25rem',
             background: `${domainColor}1F`,
             color: domainColor,
             border: `1px solid ${domainColor}40`,
@@ -122,10 +126,10 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
         >
           {domainNames[activeDomain] || 'E-commerce'}
         </span>
-        <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '13px', color: '#f0eeff' }}>
-          Customer Support Chat
+        <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '0.8125rem', color: '#f0eeff' }}>
+          Support Chat
         </span>
-        <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>
+        <span className="only-desktop" style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.6875rem', color: 'rgba(255,255,255,0.4)' }}>
           POST /api/chat · dynamic adapter routing
         </span>
       </div>
@@ -135,10 +139,10 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: '20px',
+          padding: '1.25rem 1rem 5rem 1rem', // Extra bottom padding for fixed input
           display: 'flex',
           flexDirection: 'column',
-          gap: '16px',
+          gap: '1rem',
         }}
       >
         {messages.map(msg => (
@@ -148,22 +152,23 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
             style={{
               display: 'flex',
               flexDirection: msg.role === 'user' ? 'row-reverse' : 'row',
-              gap: '10px',
-              maxWidth: '85%',
+              gap: '0.625rem',
+              width: 'max-content',
+              maxWidth: '90%',
               alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
             }}
           >
             {/* Avatar */}
             <div
               style={{
-                width: '28px',
-                height: '28px',
-                borderRadius: '8px',
+                width: '1.75rem',
+                height: '1.75rem',
+                borderRadius: '0.5rem',
                 flexShrink: 0,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '12px',
+                fontSize: '0.75rem',
                 ...(msg.role === 'ai'
                   ? { background: 'linear-gradient(135deg, #7c6aff, #a78bfa)', color: 'white' }
                   : { background: '#18181f', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.4)' }),
@@ -173,14 +178,14 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
             </div>
 
             {/* Content */}
-            <div>
+            <div style={{ maxWidth: 'calc(100% - 2.5rem)' }}>
               {/* Meta */}
               <div
                 style={{
-                  marginBottom: '4px',
+                  marginBottom: '0.25rem',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
+                  gap: '0.375rem',
                   justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
                 }}
               >
@@ -188,11 +193,11 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
                   <span
                     style={{
                       fontFamily: 'DM Mono, monospace',
-                      fontSize: '9px',
+                      fontSize: '0.5625rem',
                       fontWeight: 700,
                       textTransform: 'uppercase',
-                      padding: '2px 7px',
-                      borderRadius: '4px',
+                      padding: '0.125rem 0.4375rem',
+                      borderRadius: '0.25rem',
                       background: `${domainColor}26`,
                       color: domainColor,
                     }}
@@ -200,30 +205,31 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
                     {msg.tag}
                   </span>
                 )}
-                <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '10px', color: 'rgba(255,255,255,0.4)' }}>
-                  {msg.role === 'ai' ? 'NexusAI · just now' : 'You · just now'}
+                <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.625rem', color: 'rgba(255,255,255,0.4)' }}>
+                  {msg.role === 'ai' ? 'NexusAI' : 'You'}
                 </span>
               </div>
 
               {/* Bubble */}
               <div
                 style={{
-                  padding: '10px 14px',
+                  padding: '0.625rem 0.875rem',
                   fontFamily: 'DM Mono, monospace',
-                  fontSize: '13px',
+                  fontSize: '0.8125rem',
                   lineHeight: 1.6,
+                  wordBreak: 'break-word',
                   ...(msg.role === 'ai'
                     ? {
                         background: '#18181f',
                         border: '1px solid rgba(255,255,255,0.12)',
-                        borderRadius: '12px',
-                        borderTopLeftRadius: '4px',
+                        borderRadius: '0.75rem',
+                        borderTopLeftRadius: '0.25rem',
                         color: '#f0eeff',
                       }
                     : {
                         background: 'linear-gradient(135deg, #7c6aff, #9333ea)',
-                        borderRadius: '12px',
-                        borderTopRightRadius: '4px',
+                        borderRadius: '0.75rem',
+                        borderTopRightRadius: '0.25rem',
                         color: 'white',
                       }),
                 }}
@@ -236,36 +242,36 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
 
         {/* Typing indicator */}
         {isTyping && (
-          <div className="message-enter" style={{ display: 'flex', gap: '10px', maxWidth: '85%' }}>
+          <div className="message-enter" style={{ display: 'flex', gap: '0.625rem', maxWidth: '90%' }}>
             <div
               style={{
-                width: '28px',
-                height: '28px',
-                borderRadius: '8px',
+                width: '1.75rem',
+                height: '1.75rem',
+                borderRadius: '0.5rem',
                 flexShrink: 0,
                 background: 'linear-gradient(135deg, #7c6aff, #a78bfa)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: 'white',
-                fontSize: '12px',
+                fontSize: '0.75rem',
               }}
             >
               Λ
             </div>
             <div>
-              <div style={{ marginBottom: '4px', fontFamily: 'DM Mono, monospace', fontSize: '10px', color: 'rgba(255,255,255,0.4)' }}>
+              <div style={{ marginBottom: '0.25rem', fontFamily: 'DM Mono, monospace', fontSize: '0.625rem', color: 'rgba(255,255,255,0.4)' }}>
                 NexusAI · typing...
               </div>
               <div
                 style={{
                   background: '#18181f',
                   border: '1px solid rgba(255,255,255,0.12)',
-                  borderRadius: '12px',
-                  borderTopLeftRadius: '4px',
-                  padding: '14px 18px',
+                  borderRadius: '0.75rem',
+                  borderTopLeftRadius: '0.25rem',
+                  padding: '0.875rem 1.125rem',
                   display: 'flex',
-                  gap: '4px',
+                  gap: '0.25rem',
                   alignItems: 'center',
                 }}
               >
@@ -282,13 +288,20 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
 
       {/* Input Bar */}
       <div
+        className="chat-input-container"
         style={{
-          padding: '14px 20px',
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: '0.875rem 1rem',
           borderTop: '1px solid rgba(255,255,255,0.07)',
-          background: '#111118',
+          background: 'rgba(17,17,24,0.9)',
+          backdropFilter: 'blur(12px)',
           display: 'flex',
-          gap: '10px',
-          alignItems: 'flex-end',
+          gap: '0.625rem',
+          alignItems: 'center',
+          zIndex: 20,
         }}
       >
         <div
@@ -296,12 +309,13 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
             flex: 1,
             background: '#18181f',
             border: '1px solid rgba(255,255,255,0.12)',
-            borderRadius: '12px',
-            padding: '10px 14px',
+            borderRadius: '0.75rem',
+            padding: '0.625rem 0.875rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
+            gap: '0.625rem',
             transition: 'border-color 0.2s, box-shadow 0.2s',
+            minHeight: '2.75rem', // Touch target friendly
           }}
           onFocus={e => {
             e.currentTarget.style.borderColor = 'rgba(124,106,255,0.5)'
@@ -323,8 +337,9 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
               border: 'none',
               outline: 'none',
               fontFamily: 'DM Mono, monospace',
-              fontSize: '13px',
+              fontSize: '0.8125rem',
               color: '#f0eeff',
+              width: '100%',
             }}
           />
         </div>
@@ -333,9 +348,9 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
         <button
           onClick={sendMessage}
           style={{
-            width: '38px',
-            height: '38px',
-            borderRadius: '10px',
+            width: '2.75rem',
+            height: '2.75rem',
+            borderRadius: '0.625rem',
             flexShrink: 0,
             background: 'linear-gradient(135deg, #7c6aff, #9333ea)',
             border: 'none',
@@ -350,12 +365,21 @@ export default function ChatWindow({ activeDomain, domainColor, adapterTag, onNe
           onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.95)' }}
           onMouseUp={e => { e.currentTarget.style.transform = 'scale(1)' }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="22" y1="2" x2="11" y2="13" />
             <polygon points="22 2 15 22 11 13 2 9 22 2" />
           </svg>
         </button>
       </div>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (min-width: 768px) {
+          .chat-input-container {
+            position: relative !important;
+            padding: 1.25rem !important;
+          }
+        }
+      `}} />
     </div>
   )
 }

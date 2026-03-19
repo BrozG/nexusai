@@ -18,6 +18,10 @@ export default function Dashboard() {
   const [lastResponse, setLastResponse] = useState('Awaiting first message...')
   const [latency, setLatency] = useState(0)
   const [mounted, setMounted] = useState(false)
+  
+  // Mobile UI States
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isJsonPanelOpen, setIsJsonPanelOpen] = useState(false)
 
   useEffect(() => {
     requestAnimationFrame(() => setMounted(true))
@@ -31,16 +35,30 @@ export default function Dashboard() {
       style={{
         opacity: mounted ? 1 : 0,
         transition: 'opacity 0.5s ease',
-        height: '100vh',
+        height: '100dvh',
         display: 'flex',
         flexDirection: 'column',
         background: '#0a0a0f',
         overflow: 'hidden',
+        position: 'relative',
       }}
     >
-      <TopBar />
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-        <Sidebar activeDomain={activeDomain} onDomainChange={setActiveDomain} />
+      <TopBar 
+        onMenuClick={() => setIsSidebarOpen(true)} 
+        onJsonToggle={() => setIsJsonPanelOpen(!isJsonPanelOpen)}
+      />
+      
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative' }}>
+        <Sidebar 
+          activeDomain={activeDomain} 
+          onDomainChange={(d) => {
+            setActiveDomain(d);
+            setIsSidebarOpen(false);
+          }} 
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+        />
+        
         <ChatWindow
           activeDomain={activeDomain}
           domainColor={current.color}
@@ -50,11 +68,14 @@ export default function Dashboard() {
             setLatency(lat)
           }}
         />
+
         <JsonPanel
           lastResponse={lastResponse}
           domain={activeDomain}
           latency={latency}
           adapterName={current.short}
+          isOpen={isJsonPanelOpen}
+          onClose={() => setIsJsonPanelOpen(false)}
         />
       </div>
     </main>
