@@ -4,11 +4,41 @@
 
 ---
 
+## 👥 Team Project
+
+This is a collaborative project. Here's what each member contributed:
+
+| Role | Contributor | Work Done |
+|---|---|---|
+| **AI Architecture & Backend Design** | [@BrozG](https://github.com/BrozG) | Designed the full system architecture — LoRA adapter pipeline, domain detection (Telecom, Banking etc.), Phi-2 fine-tuning, Vector Store integration for company policies, FastAPI backend design |
+| **Web UI & Frontend** | [@kuhitjeetaray](https://github.com/kuhitjeetaray) | Built the Next.js frontend, Three.js hero, Admin Dashboard, Customer Portal |
+
+---
+
+## 🧠 System Architecture (Designed by @BrozG)
+
+```
+Company PDFs / Policies
+        ↓
+   Vector Store  ←──────────────────────────┐
+        ↓                                   │
+   Domain Detection (LoRA Adapter)          │
+   [Telecom | Banking | Healthcare...]      │
+        ↓                                   │
+   Phi-2 LLM (frozen parameters)            │
+   + LoRA Domain Adapter                    │
+        ↓                                   │
+   FastAPI Backend  ──────────────────── Web UI (Next.js)
+```
+
+---
+
 ## What is this?
 
 This is the **Next.js web UI** for the NexusAI system. It connects to a FastAPI backend (running on Colab or a local server) that serves domain-specific LoRA adapters on top of `microsoft/phi-2`.
 
 The interface includes:
+
 - 🌐 **Landing / Hero** — animated immersive hero built with Three.js
 - 💬 **Customer Portal** — end-user chat interface with live AI responses
 - 📊 **Admin Dashboard** — monitor active adapters, API health, and response metrics
@@ -26,6 +56,8 @@ The interface includes:
 | State | React hooks |
 | Fonts | Barlow Condensed · DM Mono |
 | Backend | FastAPI (external, via `FASTAPI_URL` env var) |
+| LLM | Microsoft Phi-2 + LoRA Adapters |
+| Vector Store | FAISS / ChromaDB |
 
 ---
 
@@ -41,7 +73,7 @@ npm install
 
 Create a `.env.local` file:
 
-```env
+```bash
 FASTAPI_URL=https://your-ngrok-or-colab-url
 ```
 
@@ -51,7 +83,7 @@ FASTAPI_URL=https://your-ngrok-or-colab-url
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the UI.
+Open http://localhost:3000 to see the UI.
 
 ---
 
